@@ -36,6 +36,15 @@ stage('Debug Git') {
     }
 }
 
+
+stage('Test SSH') {
+    steps {
+        sshagent(['github-ssh-credentials-id']) {
+            sh "ssh -T git@github.com || true"
+        }
+    }
+}
+
 stage('Commit & Push Changes') {
     steps {
         sshagent(['github-ssh-credentials-id']) {
