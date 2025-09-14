@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GIT_REPO     = "https://github.com/mohammedzuhair25/deploy-example.git"
+        GIT_REPO     = "git@github.com:mohammedzuhair25/deploy-example.git"
         DEPLOYMENT_YAML = "dev/deployment.yaml"
         IMAGE_NAME   = "nginx"
         IMAGE_TAG    = "${BUILD_NUMBER}"   // or use git commit hash
@@ -39,12 +39,6 @@ pipeline {
             }
         }
 
-        stage('Apply to Kubernetes') {
-            steps {
-                withKubeConfig([credentialsId: 'k8s-cluster-credentials']) {
-                    sh "kubectl apply -f ${DEPLOYMENT_YAML}"
-                }
-            }
         }
     }
 }
